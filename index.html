@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prihodko Architects</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* ── RESET ── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* ── TOKENS ── */
+    :root {
+      --bg:       #141414;
+      --bg-deep:  #111111;
+      --bg-up:    #1a1a1a;
+      --t1:       #e8e4dc;
+      --t2:       #9a9690;
+      --t3:       #5c5a57;
+      --t4:       #3a3835;
+      --bd:       rgba(255,255,255,0.07);
+      --bd2:      rgba(255,255,255,0.13);
+      --bd3:      rgba(255,255,255,0.24);
+      --f:        'Inter Tight', system-ui, sans-serif;
+      --fd:       'Cormorant Garamond', serif;
+      --sx:       clamp(24px, 5vw, 64px);
+      --sy:       clamp(48px, 8vw, 96px);
+      --gap:      clamp(24px, 5vw, 72px);
+      --nav-h:    60px;
+      --ease:     cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      --fast:     0.35s;
+      --slow:     0.85s;
+    }
+
+    /* ── BASE ── */
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--t1);
+      font-family: var(--f);
+      font-weight: 300;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; }
+    button { cursor: pointer; font-family: var(--f); border-radius: 0; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── NAV ── */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 9999;
+      height: var(--nav-h);
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      padding: 0 var(--sx);
+      transition: background 0.5s ease;
+    }
+    .nav.scrolled .nav-blur { opacity: 1; }
+    .nav-blur {
+      position: absolute;
+      inset: 0;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      background: transparent;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      border-bottom: 1px solid transparent;
+    }
+    .nav.scrolled .nav-blur {
+      opacity: 1;
+      border-bottom-color: var(--bd);
+    }
+    .nav-logo-wrap {
+      display: flex; align-items: center; justify-content: center;
+      height: var(--nav-h);
+      transition: opacity var(--fast);
+    }
+    .nav-logo-wrap:hover { opacity: 0.8; }
+    .nav-logo {
+      height: 52px; width: auto;
+      filter: invert(1) brightness(0.85);
+      transition: filter var(--fast);
+    }
+    .nav-right {
+      display: flex; align-items: center;
+      justify-content: flex-end;
+      gap: clamp(16px, 2vw, 28px);
+    }
+    .nav-link {
+      font-size: 10px; letter-spacing: 0.15em;
+      color: var(--t3); text-transform: uppercase;
+      font-weight: 400;
+      transition: color var(--fast);
+      white-space: nowrap;
+    }
+    .nav-link:hover { color: var(--t1); }
+    .font-switcher {
+      font-size: 10px; letter-spacing: 0.14em;
+      color: var(--t3); text-transform: uppercase;
+      background: none; border: 1px solid var(--bd);
+      padding: 6px 10px; font-weight: 500;
+      transition: all var(--fast);
+      white-space: nowrap;
+    }
+    .font-switcher:hover { color: var(--t2); border-color: var(--bd2); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      height: 100vh; min-height: 560px;
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      justify-content: flex-end;
+    }
+    .hero-video {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 177.78vh; height: 100vh;
+      min-width: 100%; min-height: 56.25vw;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(to top,
+        rgba(17,17,17,0.97) 0%,
+        rgba(17,17,17,0.85) 20%,
+        rgba(17,17,17,0.3) 45%,
+        transparent 65%);
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      padding: 0 var(--sx) clamp(48px,8vh,80px);
+      max-width: min(760px, 90vw);
+    }
+    .eyebrow {
+      font-size: 9px; letter-spacing: 0.26em;
+      color: var(--t3); text-transform: uppercase;
+      font-weight: 400; margin-bottom: 24px;
+    }
+    .hero-h1 {
+      font-family: var(--fd);
+      font-size: clamp(36px, 5vw, 68px);
+      font-weight: 400; line-height: 1.06;
+      letter-spacing: -0.01em;
+      color: var(--t1); margin-bottom: 20px;
+    }
+    .hero-sub {
+      font-size: clamp(13px, 1.4vw, 15px);
+      font-weight: 300; color: var(--t2);
+      line-height: 1.9; max-width: 380px;
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: clamp(48px,8vh,80px);
+      right: var(--sx);
+      z-index: 2;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 10px;
+    }
+    .hero-scroll span {
+      font-size: 8px; letter-spacing: 0.22em;
+      color: var(--t4); text-transform: uppercase;
+      writing-mode: vertical-rl;
+    }
+    .scroll-line {
+      width: 1px; height: 44px;
+      background: var(--t4);
+      animation: pulse 2.6s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity:.3; transform:scaleY(1); }
+      55% { opacity:.65; transform:scaleY(.55); }
+    }
+
+    /* ── SECTIONS ── */
+    .sec {
+      padding: var(--sy) var(--sx);
+      border-top: 1px solid var(--bd);
+    }
+    .sec-alt { background: var(--bg-up); }
+    .sec-deep { background: var(--bg-deep); }
+
+    /* ── TWO COL ── */
+    .two-col {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+      gap: var(--gap);
+      align-items: start;
+    }
+
+    /* ── TYPOGRAPHY ── */
+    .h2 {
+      font-family: var(--fd);
+      font-size: clamp(26px, 3.5vw, 48px);
+      font-weight: 400; line-height: 1.1;
+      letter-spacing: -0.01em; color: var(--t1);
+    }
+    .body-text {
+      font-size: clamp(13px, 1.4vw, 15px);
+      font-weight: 300; color: var(--t2);
+      line-height: 1.95; margin-bottom: 14px;
+    }
+    .list-italic { list-style: none; margin: 18px 0; }
+    .list-italic li {
+      font-size: clamp(15px, 1.6vw, 17px);
+      font-weight: 300; color: var(--t3);
+      font-style: italic; line-height: 1.75;
+    }
+    .text-right { text-align: right; }
+    .pullquote {
+      margin-top: 28px; padding-top: 24px;
+      border-top: 1px solid var(--bd);
+      font-family: var(--fd);
+      font-size: clamp(16px, 1.8vw, 20px);
+      font-weight: 400; color: var(--t1);
+      font-style: italic; line-height: 1.55;
+    }
+
+    /* ── PROJECTS ── */
+    .proj-intro {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+      gap: var(--gap);
+      margin-bottom: clamp(32px, 5vw, 52px);
+      align-items: end;
+    }
+    .proj-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    .proj-wide {
+      grid-column: 1 / -1;
+    }
+    .proj-card {
+      position: relative; overflow: hidden;
+      cursor: pointer; background: var(--bg-up);
+    }
+    .proj-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transform: scale(1.08);
+      transition: transform 1.4s var(--ease);
+    }
+    .proj-card:hover img { transform: scale(1.0); }
+    .proj-thumb-wide {
+      aspect-ratio: 16/9;
+      height: auto;
+    }
+    .proj-thumb {
+      aspect-ratio: 16/9;
+      height: auto;
+    }
+    .proj-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top,
+        rgba(17,17,17,0.85) 0%,
+        rgba(17,17,17,0.2) 60%,
+        transparent 100%);
+      transition: opacity var(--fast);
+    }
+    .proj-card:hover .proj-overlay { opacity: 0.7; }
+    .proj-info {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: clamp(16px, 2vw, 28px);
+    }
+    .proj-num {
+      font-size: 9px; letter-spacing: 0.2em;
+      color: rgba(232,228,220,0.5);
+      margin-bottom: 6px; font-weight: 400;
+    }
+    .proj-title {
+      font-size: clamp(14px, 1.6vw, 18px);
+      font-weight: 700;
+      color: rgba(232,228,220,0.85);
+      line-height: 1.3; margin-bottom: 6px;
+    }
+    .proj-desc {
+      font-size: clamp(12px, 1.3vw, 14px);
+      font-weight: 400;
+      color: rgba(232,228,220,0.55);
+      line-height: 1.75;
+      opacity: 0; transform: translateY(8px);
+      transition: opacity var(--fast), transform var(--fast);
+    }
+    .proj-card:hover .proj-desc {
+      opacity: 1; transform: translateY(0);
+    }
+
+    /* ── PROCESS ── */
+    .proc-intro { margin-bottom: clamp(32px, 5vw, 52px); }
+    .proc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+      gap: 0;
+    }
+    .proc-step {
+      padding: clamp(20px,3vw,36px) clamp(16px,3vw,40px);
+      border-bottom: 1px solid var(--bd);
+      border-right: 1px solid var(--bd);
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      gap: 14px;
+    }
+    .proc-step:nth-child(2n) { border-right: none; }
+    .proc-step:nth-last-child(-n+2) { border-bottom: none; }
+    .step-num {
+      font-size: 24px; font-weight: 300;
+      color: var(--t4); font-style: italic; line-height: 1;
+    }
+    .step-title {
+      font-size: 10px; letter-spacing: 0.12em;
+      color: var(--t1); text-transform: uppercase;
+      font-weight: 500; margin-bottom: 10px;
+    }
+    .step-desc {
+      font-size: clamp(12px,1.3vw,13px);
+      font-weight: 300; color: var(--t2); line-height: 1.9;
+    }
+
+    /* ── TRUST ── */
+    .trust-list { list-style: none; margin-top: clamp(32px,5vw,56px); }
+    .trust-item {
+      padding: clamp(16px,2vw,24px) 0;
+      border-bottom: none;
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 16px;
+      align-items: start;
+      cursor: default;
+    }
+    .trust-item:first-child { border-top: none; }
+    .trust-item:hover { background: transparent; }
+    .trust-dash { color: var(--t4); font-style: italic; text-align: right; }
+    .trust-text {
+      font-size: clamp(14px, 1.8vw, 20px);
+      font-weight: 400; color: var(--t1); line-height: 1.45;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      min-height: 50vh;
+      display: flex; flex-direction: column;
+      justify-content: center;
+      border-top: 1px solid var(--bd);
+      background: var(--bg-deep);
+      padding: var(--sy) var(--sx);
+    }
+    .footer-logo-wrap {
+      display: flex; justify-content: center;
+      padding-bottom: clamp(32px,5vw,52px);
+      margin-bottom: clamp(32px,5vw,52px);
+      border-bottom: 1px solid var(--bd);
+    }
+    .footer-logo {
+      height: clamp(60px,8vw,90px); width: auto;
+      filter: invert(1) brightness(0.4);
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+      gap: clamp(32px,5vw,60px);
+      align-items: start;
+    }
+    .footer-brand-name {
+      font-size: 10px; letter-spacing: 0.18em;
+      color: var(--t2); text-transform: uppercase;
+      font-weight: 400; margin-bottom: 10px;
+    }
+    .footer-brand-sub {
+      font-size: clamp(12px,1.3vw,13px);
+      color: var(--t3); line-height: 1.75; font-weight: 300;
+    }
+    .footer-col-label {
+      font-size: 8px; letter-spacing: 0.22em;
+      color: var(--t4); text-transform: uppercase;
+      font-weight: 400; margin-bottom: 14px;
+    }
+    .footer-link {
+      display: block;
+      font-size: clamp(12px,1.3vw,13px);
+      color: var(--t3); font-weight: 300;
+      margin-bottom: 8px;
+      transition: color var(--fast);
+    }
+    .footer-link:hover { color: var(--t2); }
+    .footer-nav { display: flex; flex-direction: column; align-items: flex-end; }
+    .footer-nav-link {
+      font-size: 10px; letter-spacing: 0.13em;
+      color: var(--t4); text-transform: uppercase;
+      font-weight: 400; margin-bottom: 10px;
+      transition: color var(--fast); cursor: pointer;
+    }
+    .footer-nav-link:hover { color: var(--t2); }
+
+    /* ── FADE IN ── */
+    .fi {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity var(--slow) ease, transform var(--slow) ease;
+    }
+    .fi.vis { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav-blur"></div>
+  <div></div>
+  <a href="/" class="nav-logo-wrap">
+    <img src="assets/PA_logo300.png" alt="Prihodko Architects" class="nav-logo">
+  </a>
+  <div class="nav-right">
+    <a class="nav-link" href="#projects">Портфолио</a>
+    <a class="nav-link" href="#about">О нас</a>
+    <a class="nav-link" href="#journal">Журнал</a>
+    <a class="nav-link" href="#contact">Контакты</a>
+    <button class="font-switcher" id="fontBtn" onclick="switchFont()">CG</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <video class="hero-video" autoplay muted loop playsinline preload="none">
+    <source src="assets/hero.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="eyebrow">Архитектурное бюро · Москва</div>
+    <h1 class="hero-h1">Хорошая архитектура<br>начинается задолго<br>до фасада.</h1>
+    <p class="hero-sub">Дом проектируется не вокруг стиля.<br>Он проектируется вокруг жизни,<br>которая будет в нём происходить.</p>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="sec fi" id="problem">
+  <div class="eyebrow">Контекст</div>
+  <div class="two-col" style="margin-top:52px">
+    <div class="text-right">
+      <p class="body-text">Большинство ошибок будущего дома совершается ещё до начала строительства.</p>
+      <p class="body-text">Они не всегда заметны на визуализациях.</p>
+      <ul class="list-italic">
+        <li>Планировка.</li><li>Свет.</li><li>Приватность.</li>
+        <li>Логика движения.</li><li>Связь дома с участком.</li>
+        <li>Ежедневные сценарии жизни.</li><li>Эксплуатация через годы.</li>
+      </ul>
+      <p class="body-text">Именно эти решения определяют, будет ли дом удобным не только в день заселения, но и через десять лет.</p>
+    </div>
+    <div>
+      <h2 class="h2">Красивый дом не всегда становится хорошим домом.</h2>
+    </div>
+  </div>
+</section>
+
+<!-- APPROACH -->
+<section class="sec sec-alt fi">
+  <div class="eyebrow">Подход</div>
+  <div class="two-col" style="margin-top:52px">
+    <div>
+      <h2 class="h2">Прежде чем проектировать дом, нужно понять людей, которые будут в нём жить.</h2>
+      <ul class="list-italic" style="margin-top:28px">
+        <li>Как проходит утро.</li><li>Где собираются вечером.</li>
+        <li>Кому нужна тишина.</li><li>Как дом связан с участком.</li>
+        <li>Что должно быть открытым.</li><li>Что должно оставаться приватным.</li>
+      </ul>
+    </div>
+    <div>
+      <p class="body-text">Мы начинаем не с фасада, не со стиля и не с набора помещений.</p>
+      <p class="body-text">Сначала мы стараемся понять, как устроена жизнь семьи.</p>
+      <div class="pullquote">Архитектура возникает тогда, когда эти сценарии соединяются в целостную систему.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="sec fi" id="projects">
+  <div class="eyebrow">Избранные проекты</div>
+  <div class="proj-intro" style="margin-top:52px">
+    <h2 class="h2">Проекты</h2>
+    <p class="body-text">Мы показываем не все работы. Только проекты, в которых особенно хорошо видна связь между архитектурной идеей, жизнью владельца и реальной реализацией.</p>
+  </div>
+  <div class="proj-grid">
+    <div class="proj-card proj-wide">
+      <div class="proj-thumb-wide"><img src="assets/projects/project-1.jpg" alt="Проект 01" loading="lazy"></div>
+      <div class="proj-overlay"></div>
+      <div class="proj-info">
+        <div class="proj-num">01</div>
+        <div class="proj-title">Частный дом для постоянной загородной жизни.</div>
+        <div class="proj-desc">Архитектура построена вокруг света, приватности и связи внутренних пространств с участком.</div>
+      </div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-thumb"><img src="assets/projects/project-2.jpg" alt="Проект 02" loading="lazy"></div>
+      <div class="proj-overlay"></div>
+      <div class="proj-info">
+        <div class="proj-num">02</div>
+        <div class="proj-title">Дом в лесу.</div>
+        <div class="proj-desc">Дом для семьи, в котором общественные и приватные зоны разделены через сценарии жизни.</div>
+      </div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-thumb"><img src="assets/projects/project-3.jpg" alt="Проект 03" loading="lazy"></div>
+      <div class="proj-overlay"></div>
+      <div class="proj-info">
+        <div class="proj-num">03</div>
+        <div class="proj-title">Дом с панорамными видами.</div>
+        <div class="proj-desc">Проект, где архитектура, интерьер и ландшафт работают как единая система.</div>
+      </div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-thumb"><img src="assets/projects/project-4.jpg" alt="Проект 04" loading="lazy"></div>
+      <div class="proj-overlay"></div>
+      <div class="proj-info">
+        <div class="proj-num">04</div>
+        <div class="proj-title">Дом у воды.</div>
+        <div class="proj-desc">Связь дома с природным ландшафтом как основа архитектурного решения.</div>
+      </div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-thumb"><img src="assets/projects/project-5.jpg" alt="Проект 05" loading="lazy"></div>
+      <div class="proj-overlay"></div>
+      <div class="proj-info">
+        <div class="proj-num">05</div>
+        <div class="proj-title">Минималистичный дом.</div>
+        <div class="proj-desc">Честность материала и точность пропорций как главные инструменты.</div>
+      </div>
+    </div>
+    <div class="proj-card proj-wide">
+      <div class="proj-thumb-wide"><img src="assets/projects/project-6.jpg" alt="Проект 06" loading="lazy"></div>
+      <div class="proj-overlay"></div>
+      <div class="proj-info">
+        <div class="proj-num">06</div>
+        <div class="proj-title">Загородный дом с каркасной структурой.</div>
+        <div class="proj-desc">Открытое пространство, свет и связь с участком.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="sec sec-deep fi" id="process">
+  <div class="eyebrow">Процесс</div>
+  <div class="two-col proc-intro" style="margin-top:52px">
+    <div class="proc-steps-wrap">
+      <div class="proc-grid">
+        <div class="proc-step">
+          <div class="step-num">01</div>
+          <div><div class="step-title">Понимание задачи</div><p class="step-desc">Мы изучаем участок, образ жизни семьи, ожидания, ограничения и долгосрочные сценарии использования дома.</p></div>
+        </div>
+        <div class="proc-step">
+          <div class="step-num">02</div>
+          <div><div class="step-title">Архитектурная концепция</div><p class="step-desc">Формируем идею дома: пространственную логику, посадку на участке, связь с ландшафтом, характер материалов и света.</p></div>
+        </div>
+        <div class="proc-step">
+          <div class="step-num">03</div>
+          <div><div class="step-title">Проектирование</div><p class="step-desc">Разрабатываем архитектурные и технические решения так, чтобы дом можно было не только красиво представить, но и правильно построить.</p></div>
+        </div>
+        <div class="proc-step">
+          <div class="step-num">04</div>
+          <div><div class="step-title">Реализация</div><p class="step-desc">Сопровождаем проект в процессе строительства, чтобы первоначальная идея не потерялась в деталях исполнения.</p></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h2 class="h2">Процесс, в котором решения принимаются осознанно.</h2>
+      <p class="body-text" style="margin-top:20px">Частный дом — это тысячи решений. Часть из них видна сразу. Часть проявится только после заселения. Поэтому мы ведём проект последовательно.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section class="sec fi" id="trust">
+  <div class="eyebrow">Принципы</div>
+  <div class="two-col" style="margin-top:52px; align-items:start">
+    <div>
+      <h2 class="h2">То, что остаётся за пределами визуализации.</h2>
+    </div>
+    <ul class="trust-list">
+      <li class="trust-item"><span class="trust-dash">—</span><span class="trust-text">Дом должен быть удобным не только на плане, но и в ежедневной жизни.</span></li>
+      <li class="trust-item"><span class="trust-dash">—</span><span class="trust-text">Каждое архитектурное решение имеет последствия.</span></li>
+      <li class="trust-item"><span class="trust-dash">—</span><span class="trust-text">Фасад, интерьер и участок нельзя проектировать отдельно друг от друга.</span></li>
+      <li class="trust-item"><span class="trust-dash">—</span><span class="trust-text">Хорошая архитектура не нуждается в демонстративности.</span></li>
+      <li class="trust-item"><span class="trust-dash">—</span><span class="trust-text">Материал, конструкция и слово должны быть честными.</span></li>
+      <li class="trust-item"><span class="trust-dash">—</span><span class="trust-text">Проект не заканчивается красивой картинкой.</span></li>
+      <li class="trust-item"><span class="trust-dash">—</span><span class="trust-text">Дом должен сохранять достоинство со временем.</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer" id="contact">
+  <div class="footer-logo-wrap">
+    <img src="assets/PA_logo300.png" alt="Prihodko Architects" class="footer-logo">
+  </div>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-name">Prihodko Architects</div>
+      <div class="footer-brand-sub">Архитектурная практика<br>частных домов. Москва.</div>
+    </div>
+    <div>
+      <div class="footer-col-label">Контакты</div>
+      <a class="footer-link">Email</a>
+      <a class="footer-link">Телефон</a>
+      <a class="footer-link">Telegram</a>
+      <a class="footer-link">Адрес</a>
+    </div>
+    <div class="footer-nav">
+      <a class="footer-nav-link" href="#">Главная</a>
+      <a class="footer-nav-link" href="#projects">Портфолио</a>
+      <a class="footer-nav-link" href="#journal">Журнал</a>
+      <a class="footer-nav-link" href="#contact">Контакт</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // NAV scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 50);
+  }, { passive: true });
+
+  // Font switcher
+  const fonts = [
+    { label: 'CG', value: "'Cormorant Garamond', serif" },
+    { label: 'IT', value: "'Inter Tight', sans-serif" },
+  ];
+  let fi = 0;
+  function switchFont() {
+    fi = (fi + 1) % fonts.length;
+    document.documentElement.style.setProperty('--fd', fonts[fi].value);
+    document.getElementById('fontBtn').textContent = fonts[fi].label;
+  }
+
+  // Fade in on scroll
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('vis');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.fi').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
