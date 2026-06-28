@@ -84,7 +84,9 @@ a { text-decoration:none; color:inherit; }
 }
 .nav-logo-wrap {
   display: flex; align-items: center; justify-content: center;
-  height: var(--nav-h); transition: opacity var(--fast);
+  height: var(--nav-h);
+  transition: transform 0.1s linear, opacity 0.1s linear;
+  overflow: hidden;
 }
 .nav-logo-wrap:hover { opacity: 0.8; }
 .nav-logo { height: 52px; width: auto; filter: invert(1) brightness(0.85); }
@@ -145,14 +147,13 @@ a { text-decoration:none; color:inherit; }
   font-weight: 400; line-height: 1.06;
   letter-spacing: -0.01em; color: var(--t1);
   opacity: 0.78; text-align: right;
-  max-width: 50%; margin-left: auto;
-  margin-bottom: 20px;
+  width: 100%; margin-bottom: 20px;
 }
 .hero-sub {
   font-size: clamp(16px, 1.8vw, 22px);
   font-weight: 300; color: var(--t2);
   line-height: 1.9; text-align: right;
-  margin-left: auto;
+  width: 100%;
 }
 
 /* TYPOGRAPHY */
@@ -267,10 +268,6 @@ a { text-decoration:none; color:inherit; }
 }
 .proc-step:nth-child(2n) { border-right: none; }
 .proc-step:nth-last-child(-n+2) { border-bottom: none; }
-.proc-step:last-child {
-  border: 1px solid rgba(255,255,255,0.15);
-  background: rgba(255,255,255,0.03);
-}
 .step-num {
   font-size: 22px; font-weight: 300;
   color: var(--t4); font-style: italic; line-height: 1;
@@ -295,10 +292,14 @@ a { text-decoration:none; color:inherit; }
 }
 .trust-item:first-child { border-top: 1px solid var(--bd); }
 .trust-text {
-  font-size: clamp(20px, 2.8vw, 40px);
-  font-family: var(--fd);
-  font-weight: 400; font-style: italic;
-  line-height: 1.4; color: var(--t1);
+  font-size: clamp(18px, 2.4vw, 36px);
+  font-family: var(--f);
+  font-weight: 700;
+  font-style: normal;
+  line-height: 1.2;
+  color: var(--t1);
+  display: block;
+  width: 100%;
 }
 
 /* FOOTER */
@@ -390,7 +391,7 @@ a { text-decoration:none; color:inherit; }
     <source src="assets/hero.mp4" type="video/mp4">
   </video>
   <div class="hero-overlay"></div>
-  <div class="hero-content wrap wrap-base">
+  <div class="hero-content wrap">
     <h1 class="hero-h1">Хорошая архитектура<br>начинается задолго<br>до фасада.</h1>
     <p class="hero-sub">Дом проектируется вокруг жизни,<br>которая будет в нём происходить.</p>
   </div>
@@ -401,7 +402,7 @@ a { text-decoration:none; color:inherit; }
   <div class="wrap wrap-base">
     <div class="two-col">
       <div>
-        <h2 class="h2">Красивый дом не всегда становится хорошим домом.</h2>
+        <h2 class="h2" style="text-align:right">Красивый дом не всегда становится хорошим домом.</h2>
       </div>
       <div>
         <p class="body-text">Большинство ошибок будущего дома совершается ещё до начала строительства.</p>
@@ -422,8 +423,13 @@ a { text-decoration:none; color:inherit; }
   <div class="wrap wrap-base">
     <div class="two-col">
       <div>
-        <h2 class="h2">Прежде чем проектировать дом, нужно понять не стиль, а жизнь семьи.</h2>
-        <ul class="list-italic" style="margin-top:28px">
+        <p class="body-text">Мы не собираем пожелания в красивую картинку.</p>
+        <p class="body-text">Мы переводим привычки, участок, свет, приватность, конструкцию и бюджет в единую архитектурную систему.</p>
+        <div class="pullquote">Архитектура возникает тогда, когда эти сценарии соединяются в целостную систему.</div>
+      </div>
+      <div>
+        <h2 class="h2" style="text-align:left">Прежде чем проектировать дом, нужно понять не стиль, а жизнь семьи.</h2>
+        <ul class="list-italic" style="margin-top:28px;text-align:left">
           <li>Как проходит утро.</li>
           <li>Где собираются вечером.</li>
           <li>Кому нужна тишина.</li>
@@ -431,11 +437,6 @@ a { text-decoration:none; color:inherit; }
           <li>Что должно быть открытым.</li>
           <li>Что должно оставаться приватным.</li>
         </ul>
-      </div>
-      <div>
-        <p class="body-text">Мы не собираем пожелания в красивую картинку.</p>
-        <p class="body-text">Мы переводим привычки, участок, свет, приватность, конструкцию и бюджет в единую архитектурную систему.</p>
-        <div class="pullquote">Архитектура возникает тогда, когда эти сценарии соединяются в целостную систему.</div>
       </div>
     </div>
   </div>
@@ -527,7 +528,7 @@ a { text-decoration:none; color:inherit; }
         </div>
         <div class="proc-step">
           <div class="step-num">04</div>
-          <div><div class="step-title">Реализация</div><p class="step-desc">Мы остаёмся в проекте до конца строительства. Не как наблюдатели — как авторы. Потому что именно здесь, между чертежом и стеной, происходит большинство решений, от которых зависит качество дома.</p></div>
+          <div><div class="step-title" style="font-weight:700;color:var(--t1)">Реализация</div><p class="step-desc" style="font-weight:500;color:var(--t1);font-size:clamp(13px,1.3vw,15px)">Мы остаёмся в проекте до конца строительства. Не как наблюдатели — как авторы. Потому что именно здесь, между чертежом и стеной, происходит большинство решений, от которых зависит качество дома.</p></div>
         </div>
       </div>
       <div>
@@ -541,14 +542,15 @@ a { text-decoration:none; color:inherit; }
 <!-- TRUST -->
 <section class="sec fi" id="trust">
   <div class="wrap wrap-base">
+    <h2 class="h2" style="margin-bottom: clamp(32px,5vw,56px)">То, что остаётся за пределами визуализации.</h2>
     <ul class="trust-list">
-      <li class="trust-item"><span class="trust-text">Материал, конструкция и слово должны быть честными.</span></li>
-      <li class="trust-item"><span class="trust-text">Дом должен быть удобным не только на плане, но и в ежедневной жизни.</span></li>
-      <li class="trust-item"><span class="trust-text">Каждое архитектурное решение имеет последствия.</span></li>
-      <li class="trust-item"><span class="trust-text">Фасад, интерьер и участок нельзя проектировать отдельно друг от друга.</span></li>
-      <li class="trust-item"><span class="trust-text">Хорошая архитектура не нуждается в демонстративности.</span></li>
-      <li class="trust-item"><span class="trust-text">Проект не заканчивается красивой картинкой.</span></li>
-      <li class="trust-item"><span class="trust-text">Дом должен сохранять достоинство со временем.</span></li>
+      <li class="trust-item" style="text-align:right"><span class="trust-text">Материал, конструкция и слово должны быть честными.</span></li>
+      <li class="trust-item" style="text-align:left"><span class="trust-text">Дом должен быть удобным не только на плане, но и в ежедневной жизни.</span></li>
+      <li class="trust-item" style="text-align:right"><span class="trust-text">Каждое архитектурное решение имеет последствия.</span></li>
+      <li class="trust-item" style="text-align:left"><span class="trust-text">Фасад, интерьер и участок нельзя проектировать отдельно друг от друга.</span></li>
+      <li class="trust-item" style="text-align:right"><span class="trust-text">Хорошая архитектура не нуждается в демонстративности.</span></li>
+      <li class="trust-item" style="text-align:left"><span class="trust-text">Проект не заканчивается красивой картинкой.</span></li>
+      <li class="trust-item" style="text-align:right"><span class="trust-text">Дом должен сохранять достоинство со временем.</span></li>
     </ul>
   </div>
 </section>
@@ -619,6 +621,23 @@ function switchFont() {
   fi = (fi + 1) % fonts.length;
   document.documentElement.style.setProperty('--fd', fonts[fi].value);
   document.getElementById('fontBtn').textContent = fonts[fi].label;
+}
+
+// Logo hide on footer logo appear
+const footerLogo = document.querySelector('.footer-logo-wrap img');
+const navLogoWrap = document.querySelector('.nav-logo-wrap');
+
+if (footerLogo && navLogoWrap) {
+  const logoObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      const ratio = e.intersectionRatio;
+      navLogoWrap.style.transform = `translateY(-${ratio * 100}%)`;
+      navLogoWrap.style.opacity = 1 - ratio;
+    });
+  }, {
+    threshold: Array.from({length: 101}, (_, i) => i / 100)
+  });
+  logoObserver.observe(footerLogo);
 }
 
 const observer = new IntersectionObserver(entries => {
