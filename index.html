@@ -6,411 +6,362 @@
   <title>Prihodko Architects</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Spectral:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
   <style>
-    /* ── RESET ── */
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --c-text:    68ch;
+  --c-base:    1440px;
+  --c-gallery: 1760px;
+  --pad:  clamp(20px, 5vw, 96px);
+  --gap:  clamp(24px, 3vw, 72px);
+  --bg:      #141414;
+  --bg-deep: #111111;
+  --bg-up:   #1a1a1a;
+  --t1:      #e8e4dc;
+  --t2:      #9a9690;
+  --t3:      #5c5a57;
+  --t4:      #3a3835;
+  --bd:      rgba(255,255,255,0.07);
+  --bd2:     rgba(255,255,255,0.13);
+  --f:       'Inter Tight', system-ui, sans-serif;
+  --fd:      'Cormorant Garamond', serif;
+  --nav-h:   60px;
+  --ease:    cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --fast:    0.35s;
+  --slow:    0.85s;
+}
 
-    /* ── TOKENS ── */
-    :root {
-      --bg:       #141414;
-      --bg-deep:  #111111;
-      --bg-up:    #1a1a1a;
-      --t1:       #e8e4dc;
-      --t2:       #9a9690;
-      --t3:       #5c5a57;
-      --t4:       #3a3835;
-      --bd:       rgba(255,255,255,0.07);
-      --bd2:      rgba(255,255,255,0.13);
-      --bd3:      rgba(255,255,255,0.24);
-      --f:        'Inter Tight', system-ui, sans-serif;
-      --fd:       'Cormorant Garamond', serif;
-      --sx:       clamp(24px, 5vw, 64px);
-      --sy:       clamp(48px, 8vw, 96px);
-      --gap:      clamp(24px, 5vw, 72px);
-      --nav-h:    60px;
-      --ease:     cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      --fast:     0.35s;
-      --slow:     0.85s;
-    }
+/* Container system */
+.wrap { width: 100%; margin-inline: auto; padding-inline: var(--pad); }
+.wrap-text    { max-width: var(--c-text); }
+.wrap-base    { max-width: var(--c-base); }
+.wrap-gallery { max-width: var(--c-gallery); }
+.wrap-bleed   { max-width: 100%; padding-inline: 0; }
 
-    /* ── BASE ── */
-    html { scroll-behavior: smooth; }
-    body {
-      background: var(--bg);
-      color: var(--t1);
-      font-family: var(--f);
-      font-weight: 300;
-      line-height: 1.6;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
-    img { display: block; max-width: 100%; }
-    button { cursor: pointer; font-family: var(--f); border-radius: 0; }
-    a { text-decoration: none; color: inherit; }
+/* Section rhythm */
+.sec { padding-block: clamp(48px, 8vw, 96px); border-top: 1px solid var(--bd); }
+.sec-alt  { background: var(--bg-up); }
+.sec-deep { background: var(--bg-deep); }
 
-    /* ── NAV ── */
-    .nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 9999;
-      height: var(--nav-h);
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      align-items: center;
-      padding: 0 var(--sx);
-      transition: background 0.5s ease;
-    }
-    .nav.scrolled .nav-blur { opacity: 1; }
-    .nav-blur {
-      position: absolute;
-      inset: 0;
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-      background: transparent;
-      z-index: -1;
-      opacity: 0;
-      transition: opacity 0.5s ease;
-      border-bottom: 1px solid transparent;
-    }
-    .nav.scrolled .nav-blur {
-      opacity: 1;
-      border-bottom-color: var(--bd);
-    }
-    .nav-logo-wrap {
-      display: flex; align-items: center; justify-content: center;
-      height: var(--nav-h);
-      transition: opacity var(--fast);
-    }
-    .nav-logo-wrap:hover { opacity: 0.8; }
-    .nav-logo {
-      height: 52px; width: auto;
-      filter: invert(1) brightness(0.85);
-      transition: filter var(--fast);
-    }
-    .nav-right {
-      display: flex; align-items: center;
-      justify-content: flex-end;
-      gap: clamp(16px, 2vw, 28px);
-    }
-    .nav-link {
-      font-size: 10px; letter-spacing: 0.15em;
-      color: var(--t3); text-transform: uppercase;
-      font-weight: 400;
-      transition: color var(--fast);
-      white-space: nowrap;
-    }
-    .nav-link:hover { color: var(--t1); }
-    .font-switcher {
-      font-size: 10px; letter-spacing: 0.14em;
-      color: var(--t3); text-transform: uppercase;
-      background: none; border: 1px solid var(--bd);
-      padding: 6px 10px; font-weight: 500;
-      transition: all var(--fast);
-      white-space: nowrap;
-    }
-    .font-switcher:hover { color: var(--t2); border-color: var(--bd2); }
+/* Reset */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg); color: var(--t1);
+  font-family: var(--f); font-weight: 300;
+  line-height: 1.6; overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+img { display:block; max-width:100%; }
+button { cursor:pointer; font-family:var(--f); border-radius:0; }
+a { text-decoration:none; color:inherit; }
 
-    /* ── HERO ── */
-    .hero {
-      position: relative;
-      height: 100vh; min-height: 560px;
-      overflow: hidden;
-      display: flex; flex-direction: column;
-      justify-content: flex-end;
-    }
-    .hero-video {
-      position: absolute;
-      top: 50%; left: 50%;
-      width: 177.78vh; height: 100vh;
-      min-width: 100%; min-height: 56.25vw;
-      transform: translate(-50%, -50%);
-      object-fit: cover;
-      pointer-events: none;
-      z-index: 0;
-    }
-    .hero-overlay {
-      position: absolute; inset: 0; z-index: 1;
-      background: linear-gradient(to top,
-        rgba(17,17,17,0.97) 0%,
-        rgba(17,17,17,0.85) 20%,
-        rgba(17,17,17,0.3) 45%,
-        transparent 65%);
-    }
-    .hero-content {
-      position: relative; z-index: 2;
-      padding: 0 var(--sx) clamp(48px,8vh,80px);
-      max-width: min(760px, 90vw);
-    }
-    .eyebrow {
-      font-size: 9px; letter-spacing: 0.26em;
-      color: var(--t3); text-transform: uppercase;
-      font-weight: 400; margin-bottom: 24px;
-    }
-    .hero-h1 {
-      font-family: var(--fd);
-      font-size: clamp(36px, 5vw, 68px);
-      font-weight: 400; line-height: 1.06;
-      letter-spacing: -0.01em;
-      color: var(--t1); margin-bottom: 20px;
-    }
-    .hero-sub {
-      font-size: clamp(13px, 1.4vw, 15px);
-      font-weight: 300; color: var(--t2);
-      line-height: 1.9; max-width: 380px;
-    }
-    .hero-scroll {
-      position: absolute;
-      bottom: clamp(48px,8vh,80px);
-      right: var(--sx);
-      z-index: 2;
-      display: flex; flex-direction: column;
-      align-items: center; gap: 10px;
-    }
-    .hero-scroll span {
-      font-size: 8px; letter-spacing: 0.22em;
-      color: var(--t4); text-transform: uppercase;
-      writing-mode: vertical-rl;
-    }
-    .scroll-line {
-      width: 1px; height: 44px;
-      background: var(--t4);
-      animation: pulse 2.6s ease-in-out infinite;
-    }
-    @keyframes pulse {
-      0%,100% { opacity:.3; transform:scaleY(1); }
-      55% { opacity:.65; transform:scaleY(.55); }
-    }
+/* NAV */
+.nav {
+  position: fixed; top:0; left:0; right:0;
+  z-index: 9999; height: var(--nav-h);
+}
+.nav-inner {
+  max-width: var(--c-gallery);
+  margin-inline: auto;
+  padding-inline: var(--pad);
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+}
+.nav-blur {
+  position: absolute; inset: 0;
+  backdrop-filter: blur(9px);
+  -webkit-backdrop-filter: blur(9px);
+  background: transparent;
+  z-index: -1; opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.nav.scrolled .nav-blur { opacity: 1; }
+.nav-left {
+  display: flex; align-items: center;
+}
+.nav-logo-wrap {
+  display: flex; align-items: center; justify-content: center;
+  height: var(--nav-h); transition: opacity var(--fast);
+}
+.nav-logo-wrap:hover { opacity: 0.8; }
+.nav-logo { height: 52px; width: auto; filter: invert(1) brightness(0.85); }
+.nav-right {
+  display: flex; align-items: center;
+  justify-content: flex-end;
+  gap: clamp(16px, 2vw, 28px);
+}
+.nav-link {
+  font-size: 10px; letter-spacing: 0.15em;
+  color: #A3A09D; text-transform: uppercase;
+  font-weight: 400; transition: color var(--fast);
+  white-space: nowrap;
+}
+.nav-link:hover { color: var(--t1); }
+.font-switcher {
+  font-size: 10px; letter-spacing: 0.14em;
+  color: #A3A09D; text-transform: uppercase;
+  background: none; border: 1px solid var(--bd);
+  padding: 6px 10px; font-weight: 500;
+  transition: all var(--fast);
+}
+.font-switcher:hover { color: var(--t2); border-color: var(--bd2); }
 
-    /* ── SECTIONS ── */
-    .sec {
-      padding: var(--sy) var(--sx);
-      border-top: 1px solid var(--bd);
-    }
-    .sec-alt { background: var(--bg-up); }
-    .sec-deep { background: var(--bg-deep); }
+/* HERO */
+.hero {
+  position: relative; height: 100vh; min-height: 560px;
+  overflow: hidden; display: flex; flex-direction: column;
+  justify-content: flex-end;
+}
+.hero-video {
+  position: absolute; top:50%; left:50%;
+  width: 177.78vh; height: 100vh;
+  min-width: 100%; min-height: 56.25vw;
+  transform: translate(-50%,-50%);
+  object-fit: cover; pointer-events: none; z-index: 0;
+}
+.hero-overlay {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(to top,
+    rgba(17,17,17,0.97) 0%,
+    rgba(17,17,17,0.75) 18%,
+    rgba(17,17,17,0.2) 45%,
+    transparent 65%);
+}
+.hero-content {
+  position: relative; z-index: 2;
+  padding-bottom: clamp(48px, 8vh, 80px);
+}
+.eyebrow {
+  font-size: 9px; letter-spacing: 0.26em;
+  color: var(--t3); text-transform: uppercase;
+  font-weight: 400; margin-bottom: 24px;
+}
+.hero-h1 {
+  font-family: var(--fd);
+  font-size: clamp(52px, 7vw, 108px);
+  font-weight: 400; line-height: 1.06;
+  letter-spacing: -0.01em; color: var(--t1);
+  opacity: 0.78; text-align: right;
+  max-width: 50%; margin-left: auto;
+  margin-bottom: 20px;
+}
+.hero-sub {
+  font-size: clamp(16px, 1.8vw, 22px);
+  font-weight: 300; color: var(--t2);
+  line-height: 1.9; text-align: right;
+  margin-left: auto;
+}
 
-    /* ── TWO COL ── */
-    .two-col {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
-      gap: var(--gap);
-      align-items: start;
-    }
+/* TYPOGRAPHY */
+.h2 {
+  font-family: var(--fd);
+  font-size: clamp(28px, 3.5vw, 52px);
+  font-weight: 400; line-height: 1.1;
+  letter-spacing: -0.01em; color: var(--t1);
+}
+.body-text {
+  font-size: clamp(14px, 1.3vw, 16px);
+  font-weight: 300; color: var(--t2);
+  line-height: 1.95; margin-bottom: 16px;
+  max-width: var(--c-text);
+}
+.list-italic { list-style: none; margin: 20px 0; }
+.list-italic li {
+  font-size: clamp(15px, 1.5vw, 18px);
+  font-weight: 300; color: var(--t3);
+  font-style: italic; line-height: 1.75;
+}
+.pullquote {
+  margin-top: 32px; padding-top: 28px;
+  border-top: 1px solid var(--bd);
+  font-family: var(--fd);
+  font-size: clamp(17px, 1.8vw, 22px);
+  font-weight: 400; color: var(--t1);
+  font-style: italic; line-height: 1.55;
+  max-width: var(--c-text);
+}
 
-    /* ── TYPOGRAPHY ── */
-    .h2 {
-      font-family: var(--fd);
-      font-size: clamp(26px, 3.5vw, 48px);
-      font-weight: 400; line-height: 1.1;
-      letter-spacing: -0.01em; color: var(--t1);
-    }
-    .body-text {
-      font-size: clamp(13px, 1.4vw, 15px);
-      font-weight: 300; color: var(--t2);
-      line-height: 1.95; margin-bottom: 14px;
-    }
-    .list-italic { list-style: none; margin: 18px 0; }
-    .list-italic li {
-      font-size: clamp(15px, 1.6vw, 17px);
-      font-weight: 300; color: var(--t3);
-      font-style: italic; line-height: 1.75;
-    }
-    .text-right { text-align: right; }
-    .pullquote {
-      margin-top: 28px; padding-top: 24px;
-      border-top: 1px solid var(--bd);
-      font-family: var(--fd);
-      font-size: clamp(16px, 1.8vw, 20px);
-      font-weight: 400; color: var(--t1);
-      font-style: italic; line-height: 1.55;
-    }
+/* TWO COL */
+.two-col {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: var(--gap); align-items: start;
+}
+@media (min-width: 1024px) {
+  .two-col { grid-template-columns: 1fr 1fr; }
+  .two-col-wide { grid-template-columns: 1fr 1.4fr; }
+}
 
-    /* ── PROJECTS ── */
-    .proj-intro {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
-      gap: var(--gap);
-      margin-bottom: clamp(32px, 5vw, 52px);
-      align-items: end;
-    }
-    .proj-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
-    .proj-wide {
-      grid-column: 1 / -1;
-    }
-    .proj-card {
-      position: relative; overflow: hidden;
-      cursor: pointer; background: var(--bg-up);
-    }
-    .proj-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transform: scale(1.08);
-      transition: transform 1.4s var(--ease);
-    }
-    .proj-card:hover img { transform: scale(1.0); }
-    .proj-thumb-wide {
-      aspect-ratio: 16/9;
-      height: auto;
-    }
-    .proj-thumb {
-      aspect-ratio: 16/9;
-      height: auto;
-    }
-    .proj-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(to top,
-        rgba(17,17,17,0.85) 0%,
-        rgba(17,17,17,0.2) 60%,
-        transparent 100%);
-      transition: opacity var(--fast);
-    }
-    .proj-card:hover .proj-overlay { opacity: 0.7; }
-    .proj-info {
-      position: absolute; bottom: 0; left: 0; right: 0;
-      padding: clamp(16px, 2vw, 28px);
-    }
-    .proj-num {
-      font-size: 9px; letter-spacing: 0.2em;
-      color: rgba(232,228,220,0.5);
-      margin-bottom: 6px; font-weight: 400;
-    }
-    .proj-title {
-      font-size: clamp(14px, 1.6vw, 18px);
-      font-weight: 700;
-      color: rgba(232,228,220,0.85);
-      line-height: 1.3; margin-bottom: 6px;
-    }
-    .proj-desc {
-      font-size: clamp(12px, 1.3vw, 14px);
-      font-weight: 400;
-      color: rgba(232,228,220,0.55);
-      line-height: 1.75;
-      opacity: 0; transform: translateY(8px);
-      transition: opacity var(--fast), transform var(--fast);
-    }
-    .proj-card:hover .proj-desc {
-      opacity: 1; transform: translateY(0);
-    }
+/* PROJECTS */
+.proj-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+@media (max-width: 640px) { .proj-grid { grid-template-columns: 1fr; } }
+.proj-wide { grid-column: 1 / -1; }
+.proj-card {
+  position: relative; overflow: hidden;
+  cursor: pointer; background: var(--bg-up);
+}
+.proj-card img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+  transform: scale(1.08);
+  transition: transform 1.4s var(--ease);
+}
+.proj-card:hover img { transform: scale(1.0); }
+.proj-thumb-wide { aspect-ratio: 16/9; }
+.proj-thumb { aspect-ratio: 16/9; }
+.proj-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top,
+    rgba(17,17,17,0.88) 0%,
+    rgba(17,17,17,0.2) 55%,
+    transparent 100%);
+  transition: opacity var(--fast);
+}
+.proj-card:hover .proj-overlay { opacity: 0.7; }
+.proj-info {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: clamp(16px, 2vw, 28px);
+}
+.proj-title {
+  font-size: clamp(14px, 1.5vw, 18px);
+  font-weight: 600; color: rgba(232,228,220,0.9);
+  line-height: 1.3; margin-bottom: 6px;
+}
+.proj-meta {
+  font-size: clamp(10px, 1vw, 12px);
+  letter-spacing: 0.12em;
+  color: rgba(232,228,220,0.45);
+  text-transform: uppercase; font-weight: 400;
+  margin-bottom: 8px;
+}
+.proj-desc {
+  font-size: clamp(12px, 1.2vw, 14px);
+  font-weight: 300; color: rgba(232,228,220,0.55);
+  line-height: 1.75;
+  opacity: 0; transform: translateY(8px);
+  transition: opacity var(--fast), transform var(--fast);
+}
+.proj-card:hover .proj-desc { opacity: 1; transform: translateY(0); }
 
-    /* ── PROCESS ── */
-    .proc-intro { margin-bottom: clamp(32px, 5vw, 52px); }
-    .proc-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
-      gap: 0;
-    }
-    .proc-step {
-      padding: clamp(20px,3vw,36px) clamp(16px,3vw,40px);
-      border-bottom: 1px solid var(--bd);
-      border-right: 1px solid var(--bd);
-      display: grid;
-      grid-template-columns: 36px 1fr;
-      gap: 14px;
-    }
-    .proc-step:nth-child(2n) { border-right: none; }
-    .proc-step:nth-last-child(-n+2) { border-bottom: none; }
-    .step-num {
-      font-size: 24px; font-weight: 300;
-      color: var(--t4); font-style: italic; line-height: 1;
-    }
-    .step-title {
-      font-size: 10px; letter-spacing: 0.12em;
-      color: var(--t1); text-transform: uppercase;
-      font-weight: 500; margin-bottom: 10px;
-    }
-    .step-desc {
-      font-size: clamp(12px,1.3vw,13px);
-      font-weight: 300; color: var(--t2); line-height: 1.9;
-    }
+/* PROCESS */
+.proc-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+}
+@media (max-width: 640px) { .proc-grid { grid-template-columns: 1fr; } }
+.proc-step {
+  padding: clamp(24px,3vw,40px);
+  border-bottom: 1px solid var(--bd);
+  border-right: 1px solid var(--bd);
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: 16px;
+}
+.proc-step:nth-child(2n) { border-right: none; }
+.proc-step:nth-last-child(-n+2) { border-bottom: none; }
+.proc-step:last-child {
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.03);
+}
+.step-num {
+  font-size: 22px; font-weight: 300;
+  color: var(--t4); font-style: italic; line-height: 1;
+}
+.step-title {
+  font-size: 10px; letter-spacing: 0.14em;
+  color: var(--t1); text-transform: uppercase;
+  font-weight: 500; margin-bottom: 10px;
+}
+.step-desc {
+  font-size: clamp(13px,1.2vw,14px);
+  font-weight: 300; color: var(--t2); line-height: 1.9;
+}
 
-    /* ── TRUST ── */
-    .trust-list { list-style: none; margin-top: clamp(32px,5vw,56px); }
-    .trust-item {
-      padding: clamp(16px,2vw,24px) 0;
-      border-bottom: none;
-      display: grid;
-      grid-template-columns: 24px 1fr;
-      gap: 16px;
-      align-items: start;
-      cursor: default;
-    }
-    .trust-item:first-child { border-top: none; }
-    .trust-item:hover { background: transparent; }
-    .trust-dash { color: var(--t4); font-style: italic; text-align: right; }
-    .trust-text {
-      font-size: clamp(14px, 1.8vw, 20px);
-      font-weight: 400; color: var(--t1); line-height: 1.45;
-    }
+/* TRUST */
+.trust-list { list-style: none; }
+.trust-item {
+  padding: clamp(24px,3vw,40px) 0;
+  border-bottom: 1px solid var(--bd);
+  display: block;
+  cursor: default;
+}
+.trust-item:first-child { border-top: 1px solid var(--bd); }
+.trust-text {
+  font-size: clamp(20px, 2.8vw, 40px);
+  font-family: var(--fd);
+  font-weight: 400; font-style: italic;
+  line-height: 1.4; color: var(--t1);
+}
 
-    /* ── FOOTER ── */
-    .footer {
-      min-height: 50vh;
-      display: flex; flex-direction: column;
-      justify-content: center;
-      border-top: 1px solid var(--bd);
-      background: var(--bg-deep);
-      padding: var(--sy) var(--sx);
-    }
-    .footer-logo-wrap {
-      display: flex; justify-content: center;
-      padding-bottom: clamp(32px,5vw,52px);
-      margin-bottom: clamp(32px,5vw,52px);
-      border-bottom: 1px solid var(--bd);
-    }
-    .footer-logo {
-      height: clamp(60px,8vw,90px); width: auto;
-      filter: invert(1) brightness(0.4);
-    }
-    .footer-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
-      gap: clamp(32px,5vw,60px);
-      align-items: start;
-    }
-    .footer-brand-name {
-      font-size: 10px; letter-spacing: 0.18em;
-      color: var(--t2); text-transform: uppercase;
-      font-weight: 400; margin-bottom: 10px;
-    }
-    .footer-brand-sub {
-      font-size: clamp(12px,1.3vw,13px);
-      color: var(--t3); line-height: 1.75; font-weight: 300;
-    }
-    .footer-col-label {
-      font-size: 8px; letter-spacing: 0.22em;
-      color: var(--t4); text-transform: uppercase;
-      font-weight: 400; margin-bottom: 14px;
-    }
-    .footer-link {
-      display: block;
-      font-size: clamp(12px,1.3vw,13px);
-      color: var(--t3); font-weight: 300;
-      margin-bottom: 8px;
-      transition: color var(--fast);
-    }
-    .footer-link:hover { color: var(--t2); }
-    .footer-nav { display: flex; flex-direction: column; align-items: flex-end; }
-    .footer-nav-link {
-      font-size: 10px; letter-spacing: 0.13em;
-      color: var(--t4); text-transform: uppercase;
-      font-weight: 400; margin-bottom: 10px;
-      transition: color var(--fast); cursor: pointer;
-    }
-    .footer-nav-link:hover { color: var(--t2); }
+/* FOOTER */
+.footer {
+  min-height: 50vh; display: flex; flex-direction: column;
+  justify-content: center; border-top: 1px solid var(--bd);
+  background: var(--bg-deep);
+  padding-block: clamp(48px,8vw,96px);
+}
+.footer-logo-wrap {
+  display: flex; justify-content: center;
+  padding-bottom: clamp(32px,5vw,56px);
+  margin-bottom: clamp(32px,5vw,56px);
+  border-bottom: 1px solid var(--bd);
+}
+.footer-logo { height: clamp(60px,7vw,88px); width: auto; filter: invert(1) brightness(0.4); }
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%,180px),1fr));
+  gap: clamp(32px,4vw,60px); align-items: start;
+}
+.footer-brand-name {
+  font-size: 10px; letter-spacing: 0.18em;
+  color: var(--t2); text-transform: uppercase;
+  font-weight: 400; margin-bottom: 10px;
+}
+.footer-brand-sub {
+  font-size: clamp(12px,1.2vw,14px);
+  color: var(--t3); line-height: 1.75; font-weight: 300;
+}
+.footer-col-label {
+  font-size: 8px; letter-spacing: 0.22em;
+  color: var(--t4); text-transform: uppercase;
+  font-weight: 400; margin-bottom: 14px;
+}
+.footer-link {
+  display: block;
+  font-size: clamp(13px,1.2vw,14px);
+  color: var(--t3); font-weight: 300;
+  margin-bottom: 8px; transition: color var(--fast);
+}
+.footer-link:hover { color: var(--t2); }
+.footer-nav { display: flex; flex-direction: column; align-items: flex-end; }
+.footer-nav-link {
+  font-size: 10px; letter-spacing: 0.13em;
+  color: var(--t4); text-transform: uppercase;
+  font-weight: 400; margin-bottom: 10px;
+  transition: color var(--fast); cursor: pointer;
+}
+.footer-nav-link:hover { color: var(--t2); }
+.social-row { display: flex; gap: 16px; margin-top: 16px; }
+.social-link {
+  color: var(--t3); transition: color var(--fast); display: flex;
+}
+.social-link:hover { color: var(--t2); }
+.social-link svg { width: 18px; height: 18px; fill: currentColor; }
 
-    /* ── FADE IN ── */
-    .fi {
-      opacity: 0; transform: translateY(20px);
-      transition: opacity var(--slow) ease, transform var(--slow) ease;
-    }
-    .fi.vis { opacity: 1; transform: translateY(0); }
+/* FADE IN */
+.fi {
+  opacity: 0; transform: translateY(20px);
+  transition: opacity var(--slow) ease, transform var(--slow) ease;
+}
+.fi.vis { opacity: 1; transform: translateY(0); }
   </style>
 </head>
 <body>
@@ -418,16 +369,18 @@
 <!-- NAV -->
 <nav class="nav" id="nav">
   <div class="nav-blur"></div>
-  <div></div>
-  <a href="/" class="nav-logo-wrap">
-    <img src="assets/PA_logo300.png" alt="Prihodko Architects" class="nav-logo">
-  </a>
-  <div class="nav-right">
-    <a class="nav-link" href="#projects">Портфолио</a>
-    <a class="nav-link" href="#about">О нас</a>
-    <a class="nav-link" href="#journal">Журнал</a>
-    <a class="nav-link" href="#contact">Контакты</a>
-    <button class="font-switcher" id="fontBtn" onclick="switchFont()">CG</button>
+  <div class="nav-inner">
+    <div class="nav-left">
+      <button class="font-switcher" id="fontBtn" onclick="switchFont()">CG</button>
+    </div>
+    <a href="/" class="nav-logo-wrap">
+      <img src="assets/PA_logo300.png" alt="Prihodko Architects" class="nav-logo">
+    </a>
+    <div class="nav-right">
+      <a class="nav-link" href="#projects">Портфолио</a>
+      <a class="nav-link" href="#about">О бюро</a>
+      <a class="nav-link" href="#contact">Контакты</a>
+    </div>
   </div>
 </nav>
 
@@ -437,117 +390,119 @@
     <source src="assets/hero.mp4" type="video/mp4">
   </video>
   <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <div class="eyebrow">Архитектурное бюро · Москва</div>
+  <div class="hero-content wrap wrap-base">
     <h1 class="hero-h1">Хорошая архитектура<br>начинается задолго<br>до фасада.</h1>
-    <p class="hero-sub">Дом проектируется не вокруг стиля.<br>Он проектируется вокруг жизни,<br>которая будет в нём происходить.</p>
-  </div>
-  <div class="hero-scroll">
-    <div class="scroll-line"></div>
-    <span>Scroll</span>
+    <p class="hero-sub">Дом проектируется вокруг жизни,<br>которая будет в нём происходить.</p>
   </div>
 </section>
 
 <!-- PROBLEM -->
 <section class="sec fi" id="problem">
-  <div class="eyebrow">Контекст</div>
-  <div class="two-col" style="margin-top:52px">
-    <div class="text-right">
-      <p class="body-text">Большинство ошибок будущего дома совершается ещё до начала строительства.</p>
-      <p class="body-text">Они не всегда заметны на визуализациях.</p>
-      <ul class="list-italic">
-        <li>Планировка.</li><li>Свет.</li><li>Приватность.</li>
-        <li>Логика движения.</li><li>Связь дома с участком.</li>
-        <li>Ежедневные сценарии жизни.</li><li>Эксплуатация через годы.</li>
-      </ul>
-      <p class="body-text">Именно эти решения определяют, будет ли дом удобным не только в день заселения, но и через десять лет.</p>
-    </div>
-    <div>
-      <h2 class="h2">Красивый дом не всегда становится хорошим домом.</h2>
+  <div class="wrap wrap-base">
+    <div class="two-col">
+      <div>
+        <h2 class="h2">Красивый дом не всегда становится хорошим домом.</h2>
+      </div>
+      <div>
+        <p class="body-text">Большинство ошибок будущего дома совершается ещё до начала строительства.</p>
+        <p class="body-text">Они не всегда заметны на визуализациях.</p>
+        <ul class="list-italic">
+          <li>Планировка.</li><li>Свет.</li><li>Приватность.</li>
+          <li>Логика движения.</li><li>Связь дома с участком.</li>
+          <li>Ежедневные сценарии жизни.</li><li>Эксплуатация через годы.</li>
+        </ul>
+        <p class="body-text">Именно эти решения определяют, будет ли дом удобным не только в день заселения, но и через десять лет.</p>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- APPROACH -->
-<section class="sec sec-alt fi">
-  <div class="eyebrow">Подход</div>
-  <div class="two-col" style="margin-top:52px">
-    <div>
-      <h2 class="h2">Прежде чем проектировать дом, нужно понять людей, которые будут в нём жить.</h2>
-      <ul class="list-italic" style="margin-top:28px">
-        <li>Как проходит утро.</li><li>Где собираются вечером.</li>
-        <li>Кому нужна тишина.</li><li>Как дом связан с участком.</li>
-        <li>Что должно быть открытым.</li><li>Что должно оставаться приватным.</li>
-      </ul>
-    </div>
-    <div>
-      <p class="body-text">Мы начинаем не с фасада, не со стиля и не с набора помещений.</p>
-      <p class="body-text">Сначала мы стараемся понять, как устроена жизнь семьи.</p>
-      <div class="pullquote">Архитектура возникает тогда, когда эти сценарии соединяются в целостную систему.</div>
+<section class="sec sec-alt fi" id="about">
+  <div class="wrap wrap-base">
+    <div class="two-col">
+      <div>
+        <h2 class="h2">Прежде чем проектировать дом, нужно понять не стиль, а жизнь семьи.</h2>
+        <ul class="list-italic" style="margin-top:28px">
+          <li>Как проходит утро.</li>
+          <li>Где собираются вечером.</li>
+          <li>Кому нужна тишина.</li>
+          <li>Как дом развивается на участке.</li>
+          <li>Что должно быть открытым.</li>
+          <li>Что должно оставаться приватным.</li>
+        </ul>
+      </div>
+      <div>
+        <p class="body-text">Мы не собираем пожелания в красивую картинку.</p>
+        <p class="body-text">Мы переводим привычки, участок, свет, приватность, конструкцию и бюджет в единую архитектурную систему.</p>
+        <div class="pullquote">Архитектура возникает тогда, когда эти сценарии соединяются в целостную систему.</div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- PROJECTS -->
 <section class="sec fi" id="projects">
-  <div class="eyebrow">Избранные проекты</div>
-  <div class="proj-intro" style="margin-top:52px">
-    <h2 class="h2">Проекты</h2>
-    <p class="body-text">Мы показываем не все работы. Только проекты, в которых особенно хорошо видна связь между архитектурной идеей, жизнью владельца и реальной реализацией.</p>
+  <div class="wrap wrap-base">
+    <div style="margin-bottom:clamp(32px,5vw,52px)">
+      <h2 class="h2">Избранные проекты</h2>
+    </div>
   </div>
-  <div class="proj-grid">
-    <div class="proj-card proj-wide">
-      <div class="proj-thumb-wide"><img src="assets/projects/project-1.jpg" alt="Проект 01" loading="lazy"></div>
-      <div class="proj-overlay"></div>
-      <div class="proj-info">
-        <div class="proj-num">01</div>
-        <div class="proj-title">Частный дом для постоянной загородной жизни.</div>
-        <div class="proj-desc">Архитектура построена вокруг света, приватности и связи внутренних пространств с участком.</div>
+  <div class="wrap wrap-gallery">
+    <div class="proj-grid">
+      <div class="proj-card proj-wide">
+        <div class="proj-thumb-wide"><img src="assets/projects/project-1.jpg" alt="Проект 01" loading="lazy"></div>
+        <div class="proj-overlay"></div>
+        <div class="proj-info">
+          <div class="proj-title">Частный дом, Московская область</div>
+          <div class="proj-meta">473 м² · реализован</div>
+          <div class="proj-desc">Дом для постоянной загородной жизни семьи из четырёх человек. Главная задача — соединить приватность, свет и раскрытие дома к участку.</div>
+        </div>
       </div>
-    </div>
-    <div class="proj-card">
-      <div class="proj-thumb"><img src="assets/projects/project-2.jpg" alt="Проект 02" loading="lazy"></div>
-      <div class="proj-overlay"></div>
-      <div class="proj-info">
-        <div class="proj-num">02</div>
-        <div class="proj-title">Дом в лесу.</div>
-        <div class="proj-desc">Дом для семьи, в котором общественные и приватные зоны разделены через сценарии жизни.</div>
+      <div class="proj-card">
+        <div class="proj-thumb"><img src="assets/projects/project-2.jpg" alt="Проект 02" loading="lazy"></div>
+        <div class="proj-overlay"></div>
+        <div class="proj-info">
+          <div class="proj-title">Дом в лесу, Подмосковье</div>
+          <div class="proj-meta">380 м² · реализован</div>
+          <div class="proj-desc">Дом для семьи, в котором общественные и приватные зоны разделены через сценарии жизни.</div>
+        </div>
       </div>
-    </div>
-    <div class="proj-card">
-      <div class="proj-thumb"><img src="assets/projects/project-3.jpg" alt="Проект 03" loading="lazy"></div>
-      <div class="proj-overlay"></div>
-      <div class="proj-info">
-        <div class="proj-num">03</div>
-        <div class="proj-title">Дом с панорамными видами.</div>
-        <div class="proj-desc">Проект, где архитектура, интерьер и ландшафт работают как единая система.</div>
+      <div class="proj-card">
+        <div class="proj-thumb"><img src="assets/projects/project-3.jpg" alt="Проект 03" loading="lazy"></div>
+        <div class="proj-overlay"></div>
+        <div class="proj-info">
+          <div class="proj-title">Дом с панорамными видами</div>
+          <div class="proj-meta">520 м² · в реализации</div>
+          <div class="proj-desc">Проект, где архитектура, интерьер и ландшафт работают как единая система.</div>
+        </div>
       </div>
-    </div>
-    <div class="proj-card">
-      <div class="proj-thumb"><img src="assets/projects/project-4.jpg" alt="Проект 04" loading="lazy"></div>
-      <div class="proj-overlay"></div>
-      <div class="proj-info">
-        <div class="proj-num">04</div>
-        <div class="proj-title">Дом у воды.</div>
-        <div class="proj-desc">Связь дома с природным ландшафтом как основа архитектурного решения.</div>
+      <div class="proj-card">
+        <div class="proj-thumb"><img src="assets/projects/project-4.jpg" alt="Проект 04" loading="lazy"></div>
+        <div class="proj-overlay"></div>
+        <div class="proj-info">
+          <div class="proj-title">Дом у воды</div>
+          <div class="proj-meta">290 м² · реализован</div>
+          <div class="proj-desc">Связь дома с природным ландшафтом как основа архитектурного решения.</div>
+        </div>
       </div>
-    </div>
-    <div class="proj-card">
-      <div class="proj-thumb"><img src="assets/projects/project-5.jpg" alt="Проект 05" loading="lazy"></div>
-      <div class="proj-overlay"></div>
-      <div class="proj-info">
-        <div class="proj-num">05</div>
-        <div class="proj-title">Минималистичный дом.</div>
-        <div class="proj-desc">Честность материала и точность пропорций как главные инструменты.</div>
+      <div class="proj-card">
+        <div class="proj-thumb"><img src="assets/projects/project-5.jpg" alt="Проект 05" loading="lazy"></div>
+        <div class="proj-overlay"></div>
+        <div class="proj-info">
+          <div class="proj-title">Минималистичный дом</div>
+          <div class="proj-meta">310 м² · реализован</div>
+          <div class="proj-desc">Честность материала и точность пропорций как главные инструменты.</div>
+        </div>
       </div>
-    </div>
-    <div class="proj-card proj-wide">
-      <div class="proj-thumb-wide"><img src="assets/projects/project-6.jpg" alt="Проект 06" loading="lazy"></div>
-      <div class="proj-overlay"></div>
-      <div class="proj-info">
-        <div class="proj-num">06</div>
-        <div class="proj-title">Загородный дом с каркасной структурой.</div>
-        <div class="proj-desc">Открытое пространство, свет и связь с участком.</div>
+      <div class="proj-card proj-wide">
+        <div class="proj-thumb-wide"><img src="assets/projects/project-6.jpg" alt="Проект 06" loading="lazy"></div>
+        <div class="proj-overlay"></div>
+        <div class="proj-info">
+          <div class="proj-title">Загородный дом, Калужская область</div>
+          <div class="proj-meta">610 м² · в реализации</div>
+          <div class="proj-desc">Открытое пространство, свет и связь с участком.</div>
+        </div>
       </div>
     </div>
   </div>
@@ -555,9 +510,8 @@
 
 <!-- PROCESS -->
 <section class="sec sec-deep fi" id="process">
-  <div class="eyebrow">Процесс</div>
-  <div class="two-col proc-intro" style="margin-top:52px">
-    <div class="proc-steps-wrap">
+  <div class="wrap wrap-base">
+    <div class="two-col" style="margin-top:0">
       <div class="proc-grid">
         <div class="proc-step">
           <div class="step-num">01</div>
@@ -573,91 +527,109 @@
         </div>
         <div class="proc-step">
           <div class="step-num">04</div>
-          <div><div class="step-title">Реализация</div><p class="step-desc">Сопровождаем проект в процессе строительства, чтобы первоначальная идея не потерялась в деталях исполнения.</p></div>
+          <div><div class="step-title">Реализация</div><p class="step-desc">Мы остаёмся в проекте до конца строительства. Не как наблюдатели — как авторы. Потому что именно здесь, между чертежом и стеной, происходит большинство решений, от которых зависит качество дома.</p></div>
         </div>
       </div>
-    </div>
-    <div>
-      <h2 class="h2">Процесс, в котором решения принимаются осознанно.</h2>
-      <p class="body-text" style="margin-top:20px">Частный дом — это тысячи решений. Часть из них видна сразу. Часть проявится только после заселения. Поэтому мы ведём проект последовательно.</p>
+      <div>
+        <h2 class="h2">Процесс, в котором решения не принимаются случайно.</h2>
+        <p class="body-text" style="margin-top:20px">Частный дом — это тысячи решений. Часть из них видна сразу. Часть проявится только после заселения. Поэтому мы ведём проект последовательно.</p>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- TRUST -->
 <section class="sec fi" id="trust">
-  <div class="eyebrow">Принципы</div>
-  <div class="two-col" style="margin-top:52px; align-items:start">
-    <div>
-      <h2 class="h2">То, что остаётся за пределами визуализации.</h2>
-    </div>
+  <div class="wrap wrap-base">
     <ul class="trust-list">
-      <li class="trust-item"><span class="trust-dash">—</span><span class="trust-text">Дом должен быть удобным не только на плане, но и в ежедневной жизни.</span></li>
-      <li class="trust-item"><span class="trust-dash">—</span><span class="trust-text">Каждое архитектурное решение имеет последствия.</span></li>
-      <li class="trust-item"><span class="trust-dash">—</span><span class="trust-text">Фасад, интерьер и участок нельзя проектировать отдельно друг от друга.</span></li>
-      <li class="trust-item"><span class="trust-dash">—</span><span class="trust-text">Хорошая архитектура не нуждается в демонстративности.</span></li>
-      <li class="trust-item"><span class="trust-dash">—</span><span class="trust-text">Материал, конструкция и слово должны быть честными.</span></li>
-      <li class="trust-item"><span class="trust-dash">—</span><span class="trust-text">Проект не заканчивается красивой картинкой.</span></li>
-      <li class="trust-item"><span class="trust-dash">—</span><span class="trust-text">Дом должен сохранять достоинство со временем.</span></li>
+      <li class="trust-item"><span class="trust-text">Материал, конструкция и слово должны быть честными.</span></li>
+      <li class="trust-item"><span class="trust-text">Дом должен быть удобным не только на плане, но и в ежедневной жизни.</span></li>
+      <li class="trust-item"><span class="trust-text">Каждое архитектурное решение имеет последствия.</span></li>
+      <li class="trust-item"><span class="trust-text">Фасад, интерьер и участок нельзя проектировать отдельно друг от друга.</span></li>
+      <li class="trust-item"><span class="trust-text">Хорошая архитектура не нуждается в демонстративности.</span></li>
+      <li class="trust-item"><span class="trust-text">Проект не заканчивается красивой картинкой.</span></li>
+      <li class="trust-item"><span class="trust-text">Дом должен сохранять достоинство со временем.</span></li>
     </ul>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer class="footer" id="contact">
-  <div class="footer-logo-wrap">
-    <img src="assets/PA_logo300.png" alt="Prihodko Architects" class="footer-logo">
-  </div>
-  <div class="footer-grid">
-    <div>
-      <div class="footer-brand-name">Prihodko Architects</div>
-      <div class="footer-brand-sub">Архитектурная практика<br>частных домов. Москва.</div>
+  <div class="wrap wrap-base">
+    <div class="footer-logo-wrap">
+      <img src="assets/PA_logo300.png" alt="Prihodko Architects" class="footer-logo">
     </div>
-    <div>
-      <div class="footer-col-label">Контакты</div>
-      <a class="footer-link">Email</a>
-      <a class="footer-link">Телефон</a>
-      <a class="footer-link">Telegram</a>
-      <a class="footer-link">Адрес</a>
-    </div>
-    <div class="footer-nav">
-      <a class="footer-nav-link" href="#">Главная</a>
-      <a class="footer-nav-link" href="#projects">Портфолио</a>
-      <a class="footer-nav-link" href="#journal">Журнал</a>
-      <a class="footer-nav-link" href="#contact">Контакт</a>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-name">Prihodko Architects</div>
+        <div class="footer-brand-sub">Архитектурная практика<br>частных домов. Москва.</div>
+      </div>
+      <div>
+        <div class="footer-col-label">Контакты</div>
+        <a class="footer-link" href="mailto:Anton@Prihodko.design">Anton@Prihodko.design</a>
+        <a class="footer-link">Телефон</a>
+        <div class="social-row">
+          <!-- Telegram -->
+          <a class="social-link" href="#" title="Telegram">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.96 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+            </svg>
+          </a>
+          <!-- Pinterest -->
+          <a class="social-link" href="#" title="Pinterest">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/>
+            </svg>
+          </a>
+          <!-- Instagram -->
+          <a class="social-link" href="#" title="Instagram">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
+            </svg>
+          </a>
+          <!-- ВКонтакте -->
+          <a class="social-link" href="#" title="ВКонтакте">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M15.684 0H8.316C1.592 0 0 1.592 0 8.316v7.368C0 22.408 1.592 24 8.316 24h7.368C22.408 24 24 22.408 24 15.684V8.316C24 1.592 22.408 0 15.684 0zm3.692 17.123h-1.744c-.66 0-.862-.525-2.049-1.714-1.032-1-1.49-1.135-1.744-1.135-.356 0-.458.102-.458.593v1.575c0 .424-.135.678-1.253.678-1.846 0-3.896-1.118-5.335-3.202C5.91 11.51 5.27 9.3 5.27 8.813c0-.254.102-.491.593-.491h1.744c.44 0 .61.203.78.677.863 2.49 2.303 4.675 2.896 4.675.22 0 .322-.102.322-.66V9.864c-.068-1.186-.695-1.287-.695-1.71 0-.204.17-.407.44-.407h2.744c.373 0 .508.203.508.643v3.473c0 .372.17.508.271.508.22 0 .407-.136.813-.542 1.253-1.406 2.151-3.574 2.151-3.574.119-.254.322-.491.763-.491h1.744c.525 0 .643.27.525.643-.22 1.017-2.354 4.031-2.354 4.031-.186.305-.254.44 0 .78.186.254.796.779 1.203 1.253.745.847 1.32 1.558 1.473 2.05.17.49-.085.745-.576.745z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-nav">
+        <a class="footer-nav-link" href="#">Главная</a>
+        <a class="footer-nav-link" href="#projects">Портфолио</a>
+        <a class="footer-nav-link" href="#contact">Контакты</a>
+      </div>
     </div>
   </div>
 </footer>
 
 <script>
-  // NAV scroll
-  const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 50);
-  }, { passive: true });
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 50);
+}, { passive: true });
 
-  // Font switcher
-  const fonts = [
-    { label: 'CG', value: "'Cormorant Garamond', serif" },
-    { label: 'IT', value: "'Inter Tight', sans-serif" },
-  ];
-  let fi = 0;
-  function switchFont() {
-    fi = (fi + 1) % fonts.length;
-    document.documentElement.style.setProperty('--fd', fonts[fi].value);
-    document.getElementById('fontBtn').textContent = fonts[fi].label;
-  }
+const fonts = [
+  { label: 'CG', value: "'Cormorant Garamond', serif" },
+  { label: 'IT', value: "'Inter Tight', sans-serif" },
+];
+let fi = 0;
+function switchFont() {
+  fi = (fi + 1) % fonts.length;
+  document.documentElement.style.setProperty('--fd', fonts[fi].value);
+  document.getElementById('fontBtn').textContent = fonts[fi].label;
+}
 
-  // Fade in on scroll
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('vis');
-        observer.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-  document.querySelectorAll('.fi').forEach(el => observer.observe(el));
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('vis');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.06, rootMargin: '0px 0px -30px 0px' });
+document.querySelectorAll('.fi').forEach(el => observer.observe(el));
 </script>
 
 </body>
